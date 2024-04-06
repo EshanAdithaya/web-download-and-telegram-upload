@@ -31,9 +31,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['drive_link'])) {
 
     // Get file information from Google Drive API
     $fileInfoUrl = "https://www.googleapis.com/drive/v3/files/$fileId?fields=webContentLink,mimeType";
-    $fileInfo = json_decode(file_get_contents($fileInfoUrl), true);
-    $mimeType = $fileInfo['mimeType'];
-    $fileUrl = $fileInfo['webContentLink'];
+    $fileInfo = @json_decode(@file_get_contents($fileInfoUrl), true);
+
+    // Check if file information is retrieved successfully
+    if (!$fileInfo || isset($fileInfo['error'])) {
+        echo "Error: Unable to retrieve file information. ";
+        echo isset($fileInfo['error']['message']) ? $fileInfo['error']['message'] : "Please check the link and try again.";
+        exit;
+    }
+
+    // Extract file URL and MIME type
+    $fileUrl = isset($fileInfo['webContentLink']) ? $fileInfo['webContentLink'] : '';
+    $mimeType = isset($fileInfo['mimeType']) ? $fileInfo['mimeType'] : '';
 
     // Determine file type
     switch ($mimeType) {

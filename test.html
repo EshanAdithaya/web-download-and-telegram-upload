@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Table with HTML and CSS</title>
+<title>Login and Table</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -40,11 +40,37 @@
     th:last-child, td:last-child {
         width: 60%;
     }
+    .login-container {
+        text-align: center;
+        margin-top: 100px;
+    }
+    .login-container input[type="password"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+    }
+    .login-container input[type="submit"] {
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="login-container">
+    <form id="loginForm">
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<div class="container" id="tableContainer" style="display: none;">
     <table>
         <thead>
             <tr>
@@ -72,6 +98,19 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var password = document.getElementById('password').value;
+        if (password === 'Eshan@1918') {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('tableContainer').style.display = 'block';
+        } else {
+            alert('Incorrect password. Please try again.');
+        }
+    });
+</script>
 
 </body>
 </html>
